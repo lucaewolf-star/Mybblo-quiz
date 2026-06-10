@@ -94,8 +94,9 @@ body{background:var(--cream);font-family:'Jost',sans-serif;color:var(--ink);-web
 .hero-eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;position:relative;opacity:0;animation:fadeIn .5s ease .1s forwards;}
 .hero-greeting{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:400;line-height:1.1;color:#F5EFE6;margin-bottom:22px;position:relative;opacity:0;animation:fadeUp .6s cubic-bezier(.22,.8,.36,1) .25s forwards;}
 .hero-greeting em{font-style:italic;color:var(--gold-light);}
-.hero-img-wrap{position:relative;margin:0 -36px;height:380px;overflow:hidden;opacity:0;animation:fadeIn .8s ease .35s forwards;}
+.hero-img-wrap{position:relative;margin:0 -36px;height:500px;overflow:hidden;opacity:0;animation:fadeIn .8s ease .35s forwards;}
 .hero-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;opacity:.85;filter:grayscale(100%);mix-blend-mode:luminosity;}
+.hero-img-wrap img.vertical{object-fit:contain;object-position:center center;background:#1E1A16;}
 .hero-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 0%,var(--ink) 90%);}
 .hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
 .placeholder-pattern{width:100%;height:100%;opacity:.1;background-image:repeating-linear-gradient(135deg,var(--gold-light) 0px,var(--gold-light) 1px,transparent 1px,transparent 14px);}
@@ -1098,7 +1099,8 @@ function generaReport() {
   else { _heroSrc = profilo.heroImg || ''; }
   const _heroWrap = document.getElementById('hero-img-wrap');
   if (_heroSrc && _heroWrap) {
-    _heroWrap.innerHTML = `<img src="${_heroSrc}" alt="" loading="lazy"><div class="hero-img-overlay"></div>`;
+    const _isVertical = !_isMasc;
+    _heroWrap.innerHTML = `<img src="${_heroSrc}" alt="" loading="lazy" class="${_isVertical?'vertical':''}"><div class="hero-img-overlay"></div>`;
   }
   // ── Fine hero image ──
   document.getElementById('hero-greeting').innerHTML=s.nome?`${s.nome}, il tuo profilo<br>è <em>pronto.</em>`:`Il tuo profilo<br>è <em>pronto.</em>`;
