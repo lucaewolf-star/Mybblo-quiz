@@ -1099,7 +1099,7 @@ function generaReport() {
   let _isVertical = false;
   if (_isMasc) {
     // Uomo: torso per addome/fianchi, rannicchiato per tutto il resto
-    if (_zona === 'addome' || _zona === 'petto') { _heroSrc = 'img/hero-adipe-m.jpg'; }
+    if (_zona === 'addome' || _zona === 'petto' || (_zona === 'seno' && s.genere === 'm')) { _heroSrc = 'img/hero-adipe-m.jpg'; }
     else { _heroSrc = 'img/hero-cellulite-m.jpg'; }
   } else {
     // Donna: per zona
