@@ -1090,16 +1090,25 @@ function buildRisultati(profilo,genere,zona) {
 }
 function generaReport() {
   const s=STATO, profilo=PROFILI[s.inestetismo]||PROFILI.cellulite, tessuto=s.tessuto;
-  // ── Hero image ──
+  // ── Hero image — selezionata per ZONA ──
   const _isSeno = s.zona==='seno';
   const _isMasc = s.genere==='m';
+  const _zona = s.zona || 'cosce';
   let _heroSrc = '';
-  if (_isSeno && !_isMasc && profilo.heroImgSeno) { _heroSrc = profilo.heroImgSeno; }
-  else if (_isMasc && profilo.heroImgM) { _heroSrc = profilo.heroImgM; }
-  else { _heroSrc = profilo.heroImg || ''; }
+  let _isVertical = false;
+  if (_isMasc) {
+    // Uomo: torso per addome/fianchi, rannicchiato per tutto il resto
+    if (_zona === 'addome') { _heroSrc = 'img/hero-adipe-m.jpg'; }
+    else { _heroSrc = 'img/hero-cellulite-m.jpg'; }
+  } else {
+    // Donna: per zona
+    if (_zona === 'braccia') { _heroSrc = 'img/hero-braccia-f.jpg'; }
+    else if (_zona === 'addome') { _heroSrc = 'img/hero-adipe-f.jpg'; }
+    else if (_zona === 'seno') { _heroSrc = 'img/hero-lassita-seno.jpg'; _isVertical = true; }
+    else { _heroSrc = 'img/hero-cellulite-f.jpg'; } // cosce, interno_coscia, lassita, default
+  }
   const _heroWrap = document.getElementById('hero-img-wrap');
   if (_heroSrc && _heroWrap) {
-    const _isVertical = !_isMasc;
     _heroWrap.innerHTML = `<img src="${_heroSrc}" alt="" loading="lazy" class="${_isVertical?'vertical':''}"><div class="hero-img-overlay"></div>`;
   }
   // ── Fine hero image ──
