@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY.BBLO — Il tuo report è pronto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F2EA;--ink:#1E1A16;--ink-soft:#3A3028;--ink-muted:#8A7E72;
+  --border:#E8DFD0;--gold:#A67C3A;--gold-light:#C9A86C;--gold-bg:#FBF5E8;
+  --sage:#4A6B52;--sage-bg:#EEF3EF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);font-family:'Jost',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+.page{max-width:600px;margin:0 auto;}
+
+/* TOPBAR */
+.topbar{background:var(--ink);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-logo{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.3em;color:var(--gold-light);}
+.topbar-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,239,230,.35);}
+
+/* HERO */
+.hero{background:var(--ink);padding:32px 28px 0;border-bottom:3px solid var(--gold);}
+.hero-eyebrow{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:600;}
+.hero-titolo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;line-height:1.2;color:rgba(245,239,230,.95);margin-bottom:6px;}
+.hero-titolo em{color:var(--gold-light);font-style:italic;}
+.hero-leva{font-size:14px;color:rgba(245,239,230,.7);line-height:1.7;padding:18px 0 20px;border-left:2px solid var(--gold);padding-left:14px;margin-top:12px;}
+
+/* PROFILO TAG */
+.tag-strip{background:var(--cream);padding:16px 28px;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border);}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid var(--border);border-radius:99px;font-size:11px;color:var(--ink-muted);}
+.tag strong{color:var(--gold);font-weight:600;}
+
+/* CARD */
+.card{background:#fff;padding:28px;margin-bottom:2px;border-top:1px solid var(--border);}
+.card-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:600;}
+.card-titolo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;line-height:1.3;color:var(--ink);margin-bottom:16px;}
+.card-titolo em{color:var(--gold);font-style:italic;}
+.card-testo{font-size:14px;color:var(--ink-soft);line-height:1.8;}
+.card-testo p{margin-bottom:12px;}
+.card-testo p:last-child{margin-bottom:0;}
+.card-testo strong{color:var(--ink);font-weight:600;}
+
+/* APPROCCIO */
+.approccio-card{background:var(--ink);padding:28px;}
+.approccio-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:600;}
+.approccio-titolo{font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(245,239,230,.9);margin-bottom:14px;font-style:italic;}
+.approccio-testo{font-size:13px;color:rgba(245,239,230,.7);line-height:1.8;}
+.approccio-testo strong{color:rgba(245,239,230,.9);}
+
+/* RISULTATI */
+.risultati{background:var(--gold-bg);padding:28px;border-top:1px solid var(--border);}
+.ris-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600;}
+.ris-item{padding:14px 0;border-bottom:1px solid var(--border);}
+.ris-item:last-child{border-bottom:none;}
+.ris-titolo{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.ris-sub{font-size:13px;color:var(--ink-muted);line-height:1.6;}
+
+/* CHECK-UP */
+.checkup{background:#fff;padding:28px;border-top:3px solid var(--gold);}
+.checkup-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:600;}
+.checkup-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
+.checkup-item:last-child{border-bottom:none;}
+.checkup-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:6px;flex-shrink:0;}
+.checkup-testo{font-size:13px;color:var(--ink-soft);line-height:1.7;}
+.checkup-testo strong{color:var(--ink);}
+.checkup-chiusura{font-size:13px;color:var(--ink-muted);font-style:italic;margin-top:16px;line-height:1.7;padding-top:16px;border-top:1px solid var(--border);}
+
+/* CTA */
+.cta{background:var(--ink);padding:28px;text-align:center;}
+.cta-testo{font-size:13px;color:rgba(245,239,230,.6);margin-bottom:16px;line-height:1.6;}
+.cta-btn{display:inline-block;background:linear-gradient(135deg,#B8922A 0%,#C9A86C 50%,#A67C3A 100%);color:#fff;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;letter-spacing:.06em;text-decoration:none;padding:16px 36px;border-radius:10px;text-transform:uppercase;}
+.cta-sub{font-size:11px;color:rgba(245,239,230,.35);margin-top:12px;}
+
+/* FOOTER */
+.footer{background:var(--ink);padding:24px 28px;border-top:1px solid rgba(212,184,122,.15);text-align:center;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.3em;color:var(--gold-light);margin-bottom:4px;}
+.footer-sub{font-size:11px;color:rgba(245,239,230,.35);margin-bottom:12px;}
+.footer-info{font-size:11px;color:rgba(245,239,230,.4);line-height:1.8;}
+.footer-info a{color:var(--gold);text-decoration:none;}
+.footer-legal{font-size:10px;color:rgba(245,239,230,.2);margin-top:10px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- INTESTAZIONE EMAIL -->
+<div style="background:#F7F2EA;padding:16px 28px;border-bottom:1px solid var(--border);">
+  <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:3px;">Da: <span style="color:var(--gold);">info@mybblo.com</span></div>
+  <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:3px;">A: <span style="color:var(--ink);" id="header-email">—</span></div>
+  <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);">Oggetto: <span style="color:var(--ink);" id="header-oggetto">—</span></div>
+</div>
+
+<!-- APERTURA -->
+<div style="background:#ffffff;padding:24px 28px;border-bottom:2px solid var(--gold);">
+  <div style="font-size:14px;color:var(--ink);line-height:1.8;">
+    <p style="margin:0 0 12px;">Ciao <strong id="apertura-nome">—</strong>,</p>
+    <p style="margin:0 0 12px;">il tuo <strong>MY.BBLO Profiler</strong> è completo. Trovi di seguito il tuo report personalizzato con il profilo del tuo inestetismo, l'approccio consigliato e la stima orientativa del percorso.</p>
+    <p style="margin:0 0 20px;">Il centro estetico ti contatterà presto per fissare il tuo <strong>check-up gratuito</strong>.</p>
+    <p style="margin:0;color:var(--ink-muted);font-size:13px;">A presto,<br><strong style="color:var(--gold);">Il team di MY.BBLO Beauty Explorer</strong></p>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">MY · BBLO</div>
+  <div class="topbar-label">Il tuo profilo corpo</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Analisi completata · Profilo corpo</div>
+  <div class="hero-titolo" id="hero-titolo">{{NOME}}, il tuo profilo<br>è <em>pronto.</em></div>
+  <div class="hero-leva" id="hero-leva">{{LEVA_TESTO}}</div>
+</div>
+
+<!-- TAG PROFILO -->
+<div class="tag-strip">
+  <div class="tag">Inestetismo <strong id="tag-ines">{{INESTETISMO}}</strong></div>
+  <div class="tag">Zona <strong id="tag-zona">{{ZONA}}</strong></div>
+  <div class="tag">Tessuto <strong id="tag-tess">{{TESSUTO_SHORT}}</strong></div>
+  <div class="tag">Obiettivo <strong id="tag-obv">{{OBIETTIVO_SHORT}}</strong></div>
+</div>
+
+<!-- CARD 1: IL TUO PROFILO -->
+<div class="card">
+  <div class="card-label">Il tuo profilo</div>
+  <div class="card-titolo" id="card1-titolo">{{CARD1_TITOLO}}</div>
+  <div class="card-testo" id="card1-testo">{{CARD1_TESTO}}</div>
+</div>
+
+<!-- APPROCCIO -->
+<div class="approccio-card">
+  <div class="approccio-label">Approccio consigliato</div>
+  <div class="approccio-titolo" id="approccio-label">{{APPROCCIO_LABEL}}</div>
+  <div class="approccio-testo" id="approccio-testo">{{APPROCCIO_TESTO}}</div>
+</div>
+
+<!-- RISULTATI ATTESI -->
+<div class="risultati">
+  <div class="ris-label">Cosa ti aspetti di sentire</div>
+  <div id="risultati-list">
+    <!-- dinamico -->
+  </div>
+</div>
+
+<!-- STIMA SEDUTE -->
+<div class="card" style="background:var(--gold-bg);border-top:1px solid var(--border);">
+  <div class="card-label">Stima sedute orientativa</div>
+  <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px;">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--ink);" id="stima-num">—</div>
+    <div style="font-size:13px;color:var(--ink-muted);" id="stima-label">sedute</div>
+  </div>
+  <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;" id="stima-desc">—</div>
+  <div style="font-size:11px;color:var(--ink-muted);font-style:italic;margin-top:10px;">Stima indicativa — il centro definirà il programma preciso in cabina durante il check-up gratuito.</div>
+</div>
+
+<!-- PERCHÉ IL CHECK-UP -->
+<div class="checkup">
+  <div class="checkup-label">Perché il check-up è il passo giusto</div>
+  <div class="checkup-item">
+    <div class="checkup-dot"></div>
+    <div class="checkup-testo"><strong>Completare quello che MY.BBLO ha iniziato per te</strong><br>Il tuo report ha analizzato il tuo profilo e identificato l'approccio più indicato. Ma alcune variabili — la risposta reale del tuo tessuto, le tue caratteristiche individuali, le tue abitudini — possono essere valutate solo in presenza di una professionista qualificata.</div>
+  </div>
+  <div class="checkup-item">
+    <div class="checkup-dot"></div>
+    <div class="checkup-testo"><strong>Capire se procedere per gradi o con un percorso completo</strong><br>Solo in cabina si può definire il programma giusto per te.</div>
+  </div>
+  <div class="checkup-item">
+    <div class="checkup-dot"></div>
+    <div class="checkup-testo"><strong>Conoscere le modalità di pagamento disponibili</strong><br>Ogni centro ha soluzioni flessibili pensate per te. Durante il check-up riceverai un preventivo chiaro — <strong>senza nessun obbligo di acquisto.</strong></div>
+  </div>
+  <div class="checkup-item">
+    <div class="checkup-dot"></div>
+    <div class="checkup-testo"><strong>Sentirti a tuo agio con la professionista</strong><br>La fiducia è parte del risultato. Il check-up è anche il momento per capire se quella è la persona giusta con cui iniziare il tuo percorso.</div>
+  </div>
+  <div class="checkup-chiusura">La tua professionista si impegna perché il check-up sia una consulenza autentica — il tuo punto di partenza verso la piena soddisfazione.</div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-testo">Il centro estetico ti contatterà presto per fissare il tuo check-up gratuito.</div>
+  <a href="mailto:info@mybblo.com?subject=Suggerimento report MY.BBLO" class="cta-btn">Hai suggerimenti per il tuo report?</a>
+  <div class="cta-sub">Se vuoi aiutarci a migliorare la tua esperienza, scrivici — leggiamo tutto.</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">MY · BBLO</div>
+  <div class="footer-sub">Beauty Explorer</div>
+  <div class="footer-info">
+    BBLO Srl · P.IVA 13890110961<br>
+    Tel. <a href="tel:+393935857327">+39 393 585 7327</a> · <a href="mailto:info@mybblo.com">info@mybblo.com</a><br>
+    Via Milite Ignoto 5 · 20084 Lacchiarella (MI)
+  </div>
+  <div class="footer-legal">MY.BBLO Profiler è un servizio di BBLO Srl. Dati trattati nel rispetto del GDPR UE 2016/679 e D.Lgs. 196/2003.</div>
+</div>
+
+</div>
+
+<script>
+// ─── COSTANTI TESTI DINAMICI ──────────────────────────────────────────────────
+const PROFILI = {
+  cellulite: {
+    leva: {
+      immagine: 'Vuoi sentirti a tuo agio nel tuo corpo — in costume, allo specchio, ogni giorno. Quello che hai descritto ci dice esattamente da dove partire.',
+      evitamento: 'Hai detto che ci sono situazioni che eviti per colpa di questo. È il momento di smettere di rinunciare — quello che hai descritto ci dice esattamente da dove partire.',
+      autostima: 'Vuoi guardarti allo specchio con più serenità. È un obiettivo preciso — e quello che hai descritto ci dice esattamente da dove partire.',
+      identita: 'Vuoi che il tuo corpo rispecchi chi sei davvero. Quello che hai descritto ci dice esattamente da dove partire.'
+    },
+    card1Titolo: 'Quello che hai descritto<br>ha un <em>nome preciso.</em>',
+    card1: {
+      fibroso: '<p>La cellulite che vedi sulle cosce e sui glutei non è un problema estetico superficiale — è una condizione del tessuto connettivo che si forma in profondità e si manifesta in superficie. Quella pelle irregolare, quegli avvallamenti che noti quando ti guardi, sono il risultato di un tessuto che nel tempo ha perso elasticità e sviluppato aderenze profonde.</p><p>Hai descritto un tessuto <strong>duro e difficile da smuovere</strong> — questo ci dice che la cellulite è di tipo strutturale. Non basta lavorare sulla pelle: bisogna agire in profondità per allentare le aderenze che la tengono ancorata e riattivare la circolazione locale. Il fatto che sia lì da tempo <strong>non significa che non risponda</strong> — significa che ha bisogno dell\'approccio giusto. <strong>Intervieni ora — il tessuto risponde meglio quando si agisce prima che le aderenze si consolidino ulteriormente.</strong></p>',
+      adiposo_molle: '<p>La cellulite che vedi sulle cosce e sui glutei non è un problema estetico superficiale — è una condizione del tessuto connettivo che si forma in profondità e si manifesta in superficie. Quella pelle irregolare, quegli avvallamenti che noti quando ti guardi, sono il risultato di un tessuto che nel tempo ha modificato la sua struttura.</p><p>Hai descritto un tessuto <strong>morbido e cedevole al tatto</strong> — questo ci dice che la cellulite è ancora in una fase reattiva, in cui risponde bene a trattamenti che migliorano la circolazione e mobilizzano il tessuto. <strong>Intervieni ora.</strong> Il tessuto morbido è quello che risponde più rapidamente — ogni giorno in più è un\'occasione persa.</p>',
+      vascolare: '<p>La cellulite che vedi sulle cosce e sui glutei non è un problema estetico superficiale — è una condizione del tessuto connettivo che si forma in profondità e si manifesta in superficie. Quella sensazione di gonfiore che cambia nel corso della giornata, quella pelle irregolare, sono segnali precisi del tuo corpo.</p><p>Hai descritto un tessuto <strong>gonfio e teso che peggiora nel corso della giornata</strong> — questo ci dice che la tua cellulite ha una forte componente circolatoria. I liquidi si accumulano nei tessuti e contribuiscono all\'irregolarità della pelle. Questo tipo di cellulite <strong>risponde molto bene ai trattamenti drenanti e di stimolazione meccanica</strong> — spesso già dalla prima seduta si percepisce un miglioramento concreto. <strong>Il tessuto risponde in questa fase — non aspettare, il tuo profilo ha già tutto quello che serve per iniziare.</strong></p>',
+      ignoto: '<p>La cellulite che vedi sulle cosce e sui glutei non è un problema estetico superficiale — è una condizione del tessuto connettivo che si forma in profondità e si manifesta in superficie. Quella pelle irregolare, quegli avvallamenti che noti quando ti guardi, sono il risultato di un tessuto che nel tempo ha perso elasticità.</p><p>La consistenza specifica del tuo tessuto verrà valutata direttamente in cabina — è lì che l\'estetista potrà identificare con precisione il tipo di cellulite e l\'approccio più efficace. Quello che sappiamo già è che il tuo profilo indica <strong>un inestetismo trattabile con i giusti strumenti</strong>. <strong>Inizia la tua trasformazione</strong> — il tuo profilo indica già da dove partire.</p>'
+    },
+    approccioLabel: 'Approccio meccanico-circolatorio',
+    approccio: 'I trattamenti più indicati per il tuo profilo agiscono su due livelli anatomici distinti. Il primo livello è <strong>meccanico-strutturale</strong>: le aderenze fibrose che creano gli avvallamenti visibili vengono allentate attraverso pressione controllata e vibrazione profonda, riattivando la microcircolazione locale e la mobilità del tessuto connettivo. Il secondo livello è <strong>termico-rigenerativo</strong>: l\'energia controllata che penetra in profondità stimola la riorganizzazione del collagene e migliora la qualità della pelle in superficie. Nei profili con componente circolatoria predominante, si aggiunge un terzo approccio <strong>drenante-sequenziale</strong> per ridurre il ristagno linfatico e alleviare la pesantezza associata. La combinazione più efficace per il tuo tessuto specifico viene definita in cabina.',
+    risultati: {
+      donna: [
+        {t:'Guardarti allo specchio senza quel pensiero', s:'Sentire che la pelle delle cosce è più compatta, più uniforme. Notare la differenza quando ti tocchi.'},
+        {t:'Indossare quello che vuoi, senza pensarci', s:'Il costume, i pantaloncini, il vestito. Scegliere in base a quello che ti piace — non a quello che nasconde.'},
+        {t:'Sentire le gambe più leggere e più tue', s:'Quella sensazione di compattezza quando cammini. Un corpo che risponde, che si muove, che senti davvero tuo.'}
+      ],
+      uomo: [
+        {t:'Sentirti a tuo agio in spiaggia', s:'Togliere la maglietta senza quel momento di esitazione. Goderti il mare senza pensarci.'},
+        {t:'Un fisico che risponde ai tuoi sforzi', s:'Vedere che il lavoro che fai si traduce in risultati visibili. Un corpo coerente con il tuo impegno.'},
+        {t:'Muoverti con più scioltezza', s:'Gambe più leggere, meno affaticamento. Un corpo che senti davvero tuo.'}
+      ]
+    }
+  },
+  adipe: {
+    leva: {
+      immagine: 'Vuoi sentirti a tuo agio negli abiti che ami. Il tuo profilo indica esattamente l\'approccio giusto per te.',
+      evitamento: 'Hai detto che ci sono situazioni che eviti. È il momento di fare qualcosa di concreto — il tuo profilo ci dice esattamente da dove partire.',
+      autostima: 'Vuoi guardarti allo specchio con più serenità. Il tuo profilo indica un percorso concreto per arrivarci.',
+      identita: 'Vuoi che il tuo corpo rispecchi come ti senti. Il tuo profilo ci indica l\'approccio più adatto.'
+    },
+    card1Titolo: 'Grasso localizzato:<br><em>resistente, ma trattabile.</em>',
+    card1: {
+      fibroso: '<p>I cuscinetti adiposi localizzati sono tra gli inestetismi più resistenti all\'attività fisica e alla dieta — non perché non si possa fare nulla, ma perché il grasso localizzato risponde a stimoli diversi rispetto al grasso generale. Il corpo tende a mantenerlo anche quando tutto il resto migliora.</p><p>Hai descritto un tessuto <strong>compatto con consistenza addensata</strong> — con il tempo le strutture di connessione tra le cellule adipose si ispessiscono, rendendo il tessuto più resistente. Risponde meglio a trattamenti che agiscono in profondità con azione lipolitica diretta, eventualmente integrati con stimolazione meccanica che migliora il drenaggio locale e accelera i risultati. <strong>È ora di agire — prima si interviene, più il tessuto è ricettivo agli stimoli lipolitici.</strong></p>',
+      adiposo_molle: '<p>I cuscinetti adiposi localizzati sono tra gli inestetismi più resistenti all\'attività fisica e alla dieta — non perché non si possa fare nulla, ma perché il grasso localizzato risponde a stimoli diversi rispetto al grasso generale. Il corpo tende a mantenerlo anche quando tutto il resto migliora.</p><p>Hai descritto un tessuto <strong>morbido e cedevole</strong> — il grasso localizzato morbido è la condizione più favorevole: risponde rapidamente a trattamenti lipolitici che riducono direttamente il volume delle cellule adipose. <strong>La silhouette che vuoi è più vicina di quanto pensi — inizia la tua trasformazione.</strong></p>',
+      vascolare: '<p>I cuscinetti adiposi localizzati sono tra gli inestetismi più resistenti all\'attività fisica e alla dieta — non perché non si possa fare nulla, ma perché il grasso localizzato risponde a stimoli diversi rispetto al grasso generale.</p><p>Hai descritto un tessuto <strong>gonfio e teso</strong> — il tuo adipe localizzato è associato a una componente di ritenzione idrica che contribuisce al volume percepito. L\'approccio più efficace combina azione lipolitica diretta con stimolazione del drenaggio circolatorio. Questo profilo <strong>risponde bene a un approccio integrato</strong> che lavora su entrambi gli aspetti in sequenza. <strong>Non aspettare — il tuo profilo indica che il corpo è pronto a rispondere.</strong></p>',
+      ignoto: '<p>I cuscinetti adiposi localizzati sono tra gli inestetismi più resistenti all\'attività fisica e alla dieta — non perché non si possa fare nulla, ma perché il grasso localizzato risponde a stimoli diversi rispetto al grasso generale. Il corpo tende a mantenerlo anche quando tutto il resto migliora.</p><p>Il tipo specifico del tuo adipe localizzato verrà valutato durante il check-up in cabina. Quello che sappiamo già è che il tuo profilo indica <strong>un inestetismo che risponde ai trattamenti mirati</strong> per la zona che hai indicato. <strong>Inizia ora — il momento migliore per intervenire è quando il tessuto è ancora ricettivo.</strong></p>'
+    },
+    approccioLabel: 'Approccio lipolitico-rimodellante',
+    approccio: 'I trattamenti più indicati per il tuo profilo agiscono direttamente sul tessuto adiposo localizzato attraverso meccanismi selettivi che non coinvolgono i tessuti circostanti. Il processo si sviluppa in due fasi: nella prima, la <strong>destabilizzazione lipolitica</strong> riduce progressivamente il volume delle cellule adipose nella zona trattata attraverso stimoli fisici mirati — termici, meccanici o luminosi — che inducono un processo di riduzione naturale. Nella seconda, il sistema linfatico smaltisce gradualmente le cellule trattate nei giorni successivi, con risultati che si consolidano nelle settimane seguenti. Nei profili con componente di ritenzione associata, si integra un approccio <strong>drenante-circolatorio</strong> per ottimizzare il riassorbimento e ridurre il gonfiore che spesso amplifica il volume percepito. La sequenza specifica più efficace per il tuo tessuto viene definita durante il check-up.',
+    risultati: {
+      donna: [
+        {t:'Indossare quello che vuoi, senza calcoli', s:'Quel paio di jeans tenuto da parte. Quel vestito mai messo. Scegliere senza pensarci.'},
+        {t:'Guardarti di lato con soddisfazione', s:'Vedere una silhouette più definita, un profilo più fluido. Notare che qualcosa è davvero cambiato.'},
+        {t:'Sentirti leggera dove prima sentivi peso', s:'Quella sensazione di corporatura più proporzionata. Un corpo che non ti pesa più — fisicamente e mentalmente.'}
+      ],
+      uomo: [
+        {t:'Indossare una t-shirt senza pensarci', s:'Quella sensazione di una maglietta che cade bene, senza dover coprire nulla.'},
+        {t:'Guardarti di profilo con soddisfazione', s:'Vedere una silhouette più definita. Sentire che l\'addome non spinge più in avanti.'},
+        {t:'Un fisico coerente con il tuo stile di vita', s:'Un corpo che rispecchia l\'impegno che ci metti. Il fisico che senti tuo — finalmente visibile.'}
+      ]
+    }
+  },
+  ritenzione: {
+    leva: {
+      immagine: 'Vuoi sentirti leggera e a tuo agio nel tuo corpo. Il tuo profilo indica esattamente l\'approccio giusto.',
+      evitamento: 'Hai detto che quella pesantezza ti limita in certe situazioni. È il momento di fare qualcosa di concreto — il tuo profilo ci dice da dove partire.',
+      autostima: 'Vuoi sentirti meglio nel tuo corpo, ogni giorno. Il tuo profilo indica un percorso concreto per arrivarci.',
+      identita: 'Vuoi sentirti pienamente a tuo agio. Il tuo profilo ci indica l\'approccio più adatto a te.'
+    },
+    card1Titolo: 'Ritenzione idrica:<br><em>il corpo che chiede aiuto.</em>',
+    card1: {
+      fibroso: '<p>Quella sensazione di gambe gonfie e pesanti, quei centimetri che cambiano da mattina a sera, non dipendono da quello che mangi o da quanto ti muovi. La ritenzione idrica è una risposta del sistema circolatorio — i liquidi si accumulano nei tessuti perché il drenaggio naturale non riesce a smaltirli abbastanza velocemente.</p><p>Hai descritto un tessuto <strong>gonfio e difficile da smuovere</strong> — la tua ritenzione ha anche una componente di tessuto compattato nel tempo. L\'approccio più efficace lavora sia sul drenaggio dei liquidi che sulla mobilizzazione meccanica del tessuto. <strong>Non aspettare — sentirti leggera come vorresti è possibile, e il tuo profilo indica che il corpo è pronto a rispondere.</strong></p>',
+      adiposo_molle: '<p>Quella sensazione di gambe gonfie e pesanti, quei centimetri che cambiano da mattina a sera, non dipendono da quello che mangi o da quanto ti muovi. La ritenzione idrica è una risposta del sistema circolatorio — i liquidi si accumulano nei tessuti perché il drenaggio naturale non riesce a smaltirli abbastanza velocemente.</p><p>Hai descritto un tessuto <strong>morbido con gonfiore variabile</strong> — la tua ritenzione è prevalentemente idrica. È il tipo che risponde meglio e più velocemente ai trattamenti drenanti. <strong>Già dalla prima seduta</strong> sentirai una differenza concreta.</p>',
+      vascolare: '<p>Quella sensazione di gambe gonfie e pesanti, quei centimetri che cambiano da mattina a sera, non dipendono da quello che mangi o da quanto ti muovi. La ritenzione idrica è una risposta del sistema circolatorio — i liquidi si accumulano nei tessuti perché il drenaggio naturale non riesce a smaltirli abbastanza velocemente.</p><p>Hai descritto un tessuto <strong>gonfio, teso e che peggiora nel corso della giornata</strong> — questo è il profilo classico della ritenzione di origine circolatoria. È un inestetismo che <strong>risponde molto bene ai trattamenti specifici</strong> — spesso già dalla prima seduta si percepisce un netto senso di leggerezza. <strong>Non aspettare — sentirti leggera come vorresti è possibile, e il tuo profilo indica che il corpo è pronto a rispondere.</strong></p>',
+      ignoto: '<p>Quella sensazione di gambe gonfie e pesanti, quei centimetri che cambiano da mattina a sera, non dipendono da quello che mangi o da quanto ti muovi. La ritenzione idrica è una risposta del sistema circolatorio — i liquidi si accumulano nei tessuti perché il drenaggio naturale non riesce a smaltirli abbastanza velocemente.</p><p>Il tipo specifico della tua ritenzione verrà valutato durante il check-up. Quello che sappiamo è che il tuo profilo indica <strong>un inestetismo che risponde bene ai trattamenti drenanti</strong>. <strong>Non aspettare — sentirti leggera come vorresti è possibile, e il tuo profilo indica che il corpo è pronto a rispondere.</strong></p>'
+    },
+    approccioLabel: 'Approccio drenante-circolatorio',
+    approccio: 'I trattamenti più indicati per il tuo profilo agiscono sul sistema linfatico e venoso attraverso meccanismi complementari. L\'approccio principale è <strong>drenante-sequenziale</strong>: una pressione graduata e controllata applicata in progressione stimola il ritorno venoso e linfatico, svuotando i tessuti dai liquidi accumulati e riducendo il gonfiore percepito — i risultati si avvertono spesso già dalla prima seduta come una sensazione di leggerezza immediata. In parallelo, la <strong>stimolazione muscolare profonda</strong> agisce come una pompa endogena, attivando la contrazione involontaria dei muscoli che sostengono il ritorno circolatorio nelle zone di ristagno. Nei profili con tessuto più compatto, si aggiunge un terzo approccio <strong>meccanico-mobilizzante</strong> per riattivare la microcircolazione nelle aree di ristagno cronico. La combinazione varia in base alla postura e alle abitudini quotidiane — elementi che il centro valuta in cabina.',
+    risultati: {
+      donna: [
+        {t:'Sentire le gambe leggere dalla mattina', s:'Alzarsi e non sentire subito quel peso. Gambe che partono fresche, non già affaticate.'},
+        {t:'Muoversi senza quella sensazione di gonfiore', s:'Camminare senza sentire le caviglie strette, senza quella pesantezza che aumenta nel pomeriggio.'},
+        {t:'Ritrovare costanza nei tuoi centimetri', s:'Misurazioni che non cambiano di giorno in giorno. Un corpo più stabile, più prevedibile, più tuo.'}
+      ],
+      uomo: [
+        {t:'Finire la giornata senza quel peso alle gambe', s:'Tornare a casa e non sentire le gambe come piombo. Una fine giornata diversa, più leggera.'},
+        {t:'Muoversi con più scioltezza', s:'Salire le scale, camminare a lungo — senza quella sensazione di gonfiore che limita.'},
+        {t:'Recuperare più velocemente', s:'Gambe che si riprendono meglio dopo una giornata intensa. Meno affaticamento, più energia.'}
+      ]
+    }
+  },
+  lassita: {
+    leva: {
+      immagine: 'Vuoi ritrovare la compattezza che senti di aver perso. Il tuo profilo indica esattamente l\'approccio giusto.',
+      evitamento: 'Hai detto che quella morbidezza ti pesa in certe situazioni. È il momento di fare qualcosa di concreto — il tuo profilo ci dice da dove partire.',
+      autostima: 'Vuoi guardarti allo specchio con più serenità. Il tuo profilo indica un percorso concreto per arrivarci.',
+      identita: 'Vuoi ritrovare un corpo che senti tuo. Il tuo profilo ci indica l\'approccio più adatto.'
+    },
+    card1Titolo: 'Perdita di tono:<br><em>la pelle può rispondere.</em>',
+    card1: {
+      fibroso: '<p>La pelle che ha perso elasticità — quella sensazione di cedimento che non dipende dal peso ma dalla qualità del tessuto — è il risultato di una riduzione naturale del collagene e dell\'elastina. Può succedere dopo una gravidanza, dopo un calo di peso, o semplicemente con il passare del tempo.</p><p>Hai descritto un tessuto <strong>compatto ma cedevole in superficie</strong> — la lassità che senti riguarda principalmente la qualità della pelle sovrastante. Risponde molto bene a trattamenti che agiscono attraverso <strong>energia termica controllata</strong>, capace di raggiungere gli strati profondi della pelle e stimolare dall\'interno la produzione di collagene. <strong>La compattezza che ricordi può tornare — l\'autostima nasce dal sentirsi bene nel proprio corpo, e il tuo profilo ha già una risposta precisa.</strong></p>',
+      adiposo_molle: '<p>La pelle che ha perso elasticità — quella sensazione di morbidezza o cedimento che non dipende dal peso ma dalla qualità del tessuto — è il risultato di una riduzione naturale del collagene e dell\'elastina. Può succedere dopo una gravidanza, dopo un calo di peso, o semplicemente con il passare del tempo.</p><p>Hai descritto un tessuto <strong>morbido e cedevole</strong> — la lassità che senti è legata sia alla qualità della pelle che alla presenza di <strong>tessuto adiposo sottostante</strong> che non sostiene più come prima. Lo sapevi che la pelle è sostenuta da uno strato di tessuto adiposo che con il tempo può perdere volume e tonicità? È proprio su questo livello che agiscono i trattamenti più efficaci, combinando rassodamento cutaneo e ricompattazione del tessuto sottostante. <strong>La compattezza che ricordi può tornare — l\'autostima nasce dal sentirsi bene nel proprio corpo.</strong></p>',
+      vascolare: '<p>La pelle che ha perso elasticità — quella sensazione di cedimento che non dipende dal peso ma dalla qualità del tessuto — è il risultato di una riduzione naturale del collagene e dell\'elastina.</p><p>Hai descritto un tessuto <strong>gonfio con perdita di tono</strong> — la tua lassità è associata a una componente circolatoria che contribuisce al cedimento. Agire prima sul drenaggio e poi sul rassodamento con <strong>energia termica che stimola il collagene</strong> è la sequenza più efficace per il tuo profilo. <strong>La compattezza che ricordi può tornare — l\'autostima nasce dal sentirsi bene nel proprio corpo, e il tuo profilo ha già una risposta precisa.</strong></p>',
+      ignoto: '<p>La pelle che ha perso elasticità — quella sensazione di morbidezza o cedimento che non dipende dal peso ma dalla qualità del tessuto — è il risultato di una riduzione naturale del collagene e dell\'elastina. Può succedere dopo una gravidanza, dopo un calo di peso, o semplicemente con il passare del tempo.</p><p>La caratteristica specifica del tuo tessuto verrà valutata durante il check-up. Quello che sappiamo è che il tuo profilo indica <strong>una risposta positiva ai trattamenti rassodanti</strong> che agiscono in profondità sulla struttura della pelle. <strong>La compattezza che ricordi può tornare — il tuo profilo ha già una risposta precisa.</strong></p>'
+    },
+    approccioLabel: 'Approccio rassodante-rigenerativo',
+    approccio: 'I trattamenti più indicati per il tuo profilo agiscono su due livelli tissutali in sequenza. Il primo è <strong>termico-rigenerativo</strong>: energia controllata che penetra negli strati dermici profondi stimola i fibroblasti — le cellule responsabili della produzione di collagene ed elastina — inducendo una risposta rigenerativa naturale. Il tessuto risponde producendo nuove fibre proteiche che lo rendono progressivamente più compatto e tonico. Il secondo livello è <strong>nutritivo-attivante</strong>: principi attivi specifici vengono veicolati negli strati più profondi del derma per supportare e prolungare la risposta rigenerativa. I risultati si costruiscono nel tempo — il tessuto risponde in modo progressivo e i miglioramenti continuano a consolidarsi nelle settimane successive all\'ultima seduta.',
+    risultati: {
+      donna: [
+        {t:'Sentire la pelle più compatta quando ti guardi', s:'Quella sensazione di pelle che tiene, che non cede più. Notare la differenza quando ti tocchi.'},
+        {t:'Indossare abiti attillati con più serenità', s:'Scegliere senza pensare a coprire. Sentirti a proprio agio anche in quello che prima si evitava.'},
+        {t:'Ritrovare una pelle che senti tua', s:'Quella compattezza che associavi a un corpo più giovane. Non lontanissima — più vicina di quanto pensi.'}
+      ],
+      uomo: [
+        {t:'Stare in spiaggia senza pensarci', s:'Togliere la maglietta senza quel momento di esitazione. Goderti il mare senza calcoli.'},
+        {t:'Un fisico più coerente con il tuo impegno', s:'Sentirti che l\'esterno rispecchia finalmente quello che fai. Un corpo che tiene il passo con te.'},
+        {t:'Guardarti allo specchio con più soddisfazione', s:'Vedere un profilo più definito, una pelle più tonica. Piccoli risultati che si sommano.'}
+      ]
+    }
+  }
+};
+
+const SEDUTE = {
+  cellulite: { miglioramento_iniziale:[6,9], graduale:[8,12], cambiamento_concreto:[12,16], trasformazione:[18,24] },
+  adipe:     { miglioramento_iniziale:[5,7], graduale:[5,8],  cambiamento_concreto:[8,12],  trasformazione:[12,16] },
+  ritenzione:{ miglioramento_iniziale:[4,6], graduale:[5,8],  cambiamento_concreto:[6,10],  trasformazione:[10,14] },
+  lassita:   { miglioramento_iniziale:[6,9], graduale:[8,12], cambiamento_concreto:[12,16], trasformazione:[16,22] }
+};
+function calcolaSedute(ines, obv, eta) {
+  const base = (SEDUTE[ines]||{})[obv]||[10,14];
+  let min=base[0], max=base[1];
+  if(eta==='45-55'){min=Math.ceil(min*1.2);max=Math.ceil(max*1.2);}
+  if(eta==='55plus'){min=Math.ceil(min*1.4);max=Math.ceil(max*1.4);}
+  return [min,max];
+}
+
+ = { cellulite:'Cellulite', adipe:'Grasso localizzato', ritenzione:'Gonfiore e ritenzione', lassita:'Lassità cutanea' };
+const ZONA_LABEL = { cosce:'Cosce e glutei', addome:'Addome e fianchi', braccia:'Braccia', interno_coscia:'Interno coscia', seno:'Seno e décolleté' };
+const TESS_SHORT = { fibroso:'Compatto e fibroso', adiposo_molle:'Morbido e cedevole', vascolare:'Gonfio e teso', ignoto:'Da valutare' };
+const OBV_SHORT = { miglioramento_iniziale:'Per gradi', graduale:'Graduale', cambiamento_concreto:'Cambiamento concreto', trasformazione:'Trasformazione' };
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  const p = new URLSearchParams(window.location.search);
+  const get = k => p.get(k) || '';
+
+  const nome  = decodeURIComponent(get('nome')).split(' ')[0];
+  const email = decodeURIComponent(get('email'));
+  const ines  = get('ines') || 'cellulite';
+  const tess  = get('tess') || 'fibroso';
+  const zona  = get('zona') || 'cosce';
+  const gen   = get('gen')  || 'f';
+  const leva  = get('leva') || 'evitamento';
+  const obv   = get('obv')  || 'cambiamento_concreto';
+  const eta   = get('eta')  || '30-44';
+
+  // Intestazione email
+  if(email) document.getElementById('header-email').textContent = email;
+  document.getElementById('header-oggetto').textContent = (nome?nome+', ':'') + 'il report del tuo profilo corpo è pronto — il tuo percorso parte da qui';
+  document.getElementById('apertura-nome').textContent = nome || 'cara cliente';
+
+
+
+  const prof = PROFILI[ines] || PROFILI.cellulite;
+  const gf = gen === 'f';
+
+  // Titolo hero
+  document.getElementById('hero-titolo').innerHTML = nome
+    ? nome + ', il tuo profilo<br>è <em>pronto.</em>'
+    : 'Il tuo profilo<br>è <em>pronto.</em>';
+
+  // Leva
+  document.getElementById('hero-leva').textContent = (prof.leva || {})[leva] || '';
+
+  // Tag
+  document.getElementById('tag-ines').textContent = INES_LABEL[ines] || ines;
+  document.getElementById('tag-zona').textContent = (zona==='seno'&&gen==='m')?'Petto e torace':(ZONA_LABEL[zona]||zona);
+  document.getElementById('tag-tess').textContent = TESS_SHORT[tess] || tess;
+
+  // Card1
+  document.getElementById('card1-titolo').innerHTML = prof.card1Titolo || '';
+  const card1testo = (prof.card1 || {})[tess] || (prof.card1 || {}).ignoto || '';
+  document.getElementById('card1-testo').innerHTML = card1testo;
+
+  // Approccio
+  document.getElementById('approccio-label').textContent = prof.approccioLabel || '';
+  document.getElementById('approccio-testo').innerHTML = prof.approccio || '';
+
+  // Stima sedute
+  const [min,max] = calcolaSedute(ines, obv, eta);
+  const obiettivi = {miglioramento_iniziale:'percorso progressivo',graduale:'percorso graduale',cambiamento_concreto:'percorso completo',trasformazione:'percorso strutturato'};
+  document.getElementById('stima-num').textContent = min+'–'+max;
+  document.getElementById('stima-label').textContent = 'sedute · '+( obiettivi[obv]||'');
+  document.getElementById('stima-desc').textContent = 'In base al tuo profilo e al tuo obiettivo, la stima orientativa è di '+min+'–'+max+' sedute. Il numero preciso verrà definito dalla tua professionista durante il check-up gratuito, in base alla risposta reale del tuo tessuto.';
+
+  // Risultati
+  const obv2 = obv;
+  document.getElementById('tag-obv').textContent = OBV_SHORT[obv] || obv;
+  const ris = (prof.risultati || {})[gf?'donna':'uomo'] || [];  document.getElementById('risultati-list').innerHTML = ris.map(r =>
+    `<div class="ris-item"><div class="ris-titolo">${r.t}</div><div class="ris-sub">${r.s}</div></div>`
+  ).join('');
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
