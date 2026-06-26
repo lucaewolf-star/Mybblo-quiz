@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metodo MY.BBLO Profiler — Il pre-consulente digitale per i tuoi trattamenti corpo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1A1612;
+  --ink2: #211D18;
+  --ink3: #2A2318;
+  --gold: #A67C3A;
+  --gold-light: #C9A86C;
+  --gold-faint: rgba(166,124,58,0.15);
+  --gold-border: rgba(212,184,122,0.25);
+  --cream: #F7F2EA;
+  --cream2: #EFE9DF;
+  --white: #FFFFFF;
+  --text-on-dark: rgba(245,239,230,0.85);
+  --text-muted-dark: rgba(245,239,230,0.5);
+  --text-on-light: #1E1A16;
+  --text-muted-light: #7A6E62;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--ink);
+  color: var(--text-on-dark);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── UTILITY ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(26,22,18,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topbar-logo {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.topbar-cta {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold-light);
+  padding: 8px 20px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.topbar-cta:hover { background: var(--gold); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 32px 80px;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166,124,58,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166,124,58,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(42px, 7vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+.hero-headline em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+.hero-claim {
+  font-family: var(--serif);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-on-dark);
+  max-width: 560px;
+  margin-bottom: 48px;
+}
+.hero-sub strong {
+  font-weight: 500;
+  color: var(--white);
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+.btn-primary {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(135deg, #C9A86C 0%, #A67C3A 100%);
+  padding: 16px 36px;
+  border-radius: 99px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(166,124,58,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(166,124,58,0.4); }
+.btn-secondary {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gold-light);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.2s;
+}
+.btn-secondary:hover { gap: 12px; }
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── SEZIONE GENERICA ── */
+.sez-dark {
+  background: var(--ink2);
+  padding: 96px 32px;
+}
+.sez-darker {
+  background: var(--ink);
+  padding: 96px 32px;
+}
+.sez-light {
+  background: var(--cream);
+  padding: 96px 32px;
+}
+.sez-cream2 {
+  background: var(--cream2);
+  padding: 96px 32px;
+}
+.sez-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+.sez-eyebrow {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.on-dark .sez-eyebrow { color: var(--gold); }
+.on-light .sez-eyebrow { color: var(--gold); }
+
+.sez-headline {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+.on-dark .sez-headline { color: var(--white); font-size: clamp(30px, 5vw, 46px); }
+.on-light .sez-headline { color: #1A1612; font-size: clamp(28px, 4.5vw, 42px); }
+
+.sez-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.85;
+}
+.on-dark .sez-body { color: var(--text-on-dark); }
+.on-light .sez-body { color: #2A2018; }
+
+.sez-body p + p { margin-top: 20px; }
+.sez-body strong {
+  font-weight: 500;
+}
+.on-dark .sez-body strong { color: var(--white); }
+.on-light .sez-body strong { color: #1A1612; }
+
+/* ── TRE COLONNE ATTO 2 ── */
+.tre-blocchi {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 40px 0;
+}
+.blocco {
+  padding: 28px 0;
+  border-top: 1px solid var(--gold-border);
+}
+.blocco:last-child { border-bottom: 1px solid var(--gold-border); }
+.blocco-label {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+}
+.blocco-testo {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--text-on-dark);
+}
+
+/* ── CITAZIONE "CI PENSO" ── */
+.ci-penso-wrap {
+  background: #0E0C0A;
+  padding: 120px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ci-penso-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(166,124,58,0.08) 0%, transparent 70%);
+}
+.ci-penso-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 40px;
+  position: relative;
+}
+.ci-penso-frase {
+  font-family: var(--serif);
+  font-size: clamp(64px, 14vw, 130px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+.ci-penso-sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-muted-dark);
+  margin-top: 48px;
+  font-style: italic;
+  position: relative;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+/* ── OPEN DAY ── */
+.open-day-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin: 48px 0;
+}
+.od-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--gold-border);
+  padding: 28px 24px;
+  border-radius: 4px;
+}
+.od-card-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.od-card-testo {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-on-dark);
+}
+
+/* ── LEVA EMOTIVA ── */
+.leva-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 40px 0;
+}
+.leva-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: rgba(166,124,58,0.06);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+}
+.leva-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+.leva-testo {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--text-on-dark);
+}
+
+/* ── QUANTO VALE ── */
+.valore-highlight {
+  background: rgba(166,124,58,0.08);
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  padding: 32px 36px;
+  margin: 40px 0;
+}
+.valore-highlight p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--white);
+  font-family: var(--serif);
+  font-style: italic;
+}
+
+.risparmio-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 32px 0;
+}
+.risparmio-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-on-dark);
+  line-height: 1.5;
+}
+.risparmio-item::before {
+  content: '→';
+  color: var(--gold);
+  font-size: 14px;
+  flex-shrink: 0;
+  font-family: var(--serif);
+}
+
+/* ── AMBASCIATRICE ── */
+.frase-titolare {
+  background: var(--ink3);
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  padding: 36px 40px;
+  margin: 40px 0;
+  position: relative;
+}
+.frase-titolare p {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.75;
+}
+
+/* ── CTA INTERMEDIO ── */
+.cta-intermedio {
+  text-align: center;
+  padding: 56px 32px;
+  border-top: 1px solid var(--gold-border);
+}
+.cta-intermedio-label {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-muted-dark);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.cta-intermedio-light {
+  text-align: center;
+  padding: 56px 32px;
+  border-top: 1px solid rgba(166,124,58,0.2);
+}
+.cta-intermedio-light .cta-intermedio-label {
+  color: var(--text-muted-light);
+}
+
+/* ── SEZIONE FINALE CTA ── */
+.finale {
+  background: var(--ink);
+  padding: 120px 32px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.finale::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166,124,58,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.finale-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.finale-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.finale-headline {
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 58px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+.finale-headline span {
+  font-style: italic;
+  color: var(--gold-light);
+}
+.finale-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-on-dark);
+  line-height: 1.8;
+  margin-bottom: 48px;
+}
+.finale-garanzia {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.garanzia-item {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.garanzia-item::before {
+  content: '✓';
+  color: var(--gold);
+  font-size: 14px;
+}
+.finale-accesso {
+  margin-top: 32px;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-on-dark);
+  line-height: 1.7;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #0E0C0A;
+  border-top: 1px solid var(--gold-border);
+  padding: 40px 32px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+.footer-copy {
+  font-size: 11px;
+  color: var(--text-muted-dark);
+  font-weight: 300;
+}
+
+/* ── DIVISORE DORATO ── */
+.gold-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 auto 40px;
+  opacity: 0.6;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .topbar { padding: 12px 20px; }
+  .topbar-cta { display: none; }
+  .hero { padding: 100px 24px 72px; }
+  .sez-dark, .sez-darker, .sez-light, .sez-cream2 { padding: 72px 24px; }
+  .open-day-grid { grid-template-columns: 1fr; }
+  .ci-penso-frase { font-size: clamp(52px, 18vw, 96px); }
+  .ci-penso-wrap { padding: 80px 24px; }
+  .frase-titolare { padding: 28px 24px; }
+  .frase-titolare p { font-size: 17px; }
+  .finale { padding: 80px 24px 60px; }
+  .finale-garanzia { gap: 20px; }
+  .valore-highlight { padding: 24px; }
+  .valore-highlight p { font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .hero-scroll-line { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-logo">MY.BBLO</div>
+  <a href="mybblo_prova.html" class="topbar-cta">Richiedi la demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal">Metodo MY.BBLO Profiler</div>
+    <h1 class="hero-headline reveal">
+      Il <em>tuo</em> pre-consulente digitale<br>per i trattamenti corpo.<br><em>Che prima di oggi non esisteva.</em>
+    </h1>
+    <p class="hero-claim reveal">Da oggi hai qualcuno dalla tua parte — sempre.<br><span style="font-size: clamp(16px, 2vw, 20px); font-style: normal; font-weight: 400; color: var(--text-on-dark); font-family: var(--sans);">Smetti di lavorare a intuito. Inizia a lavorare con lo strumento giusto.</span></p>
+    <p class="hero-sub reveal">
+      Mentre la cliente aspetta il suo turno o è seduta per una manicure, compila un profilo che rivela l'inestetismo che la frena e la leva emotiva che la muove. <strong>A te arriva il briefing completo</strong> — il percorso giusto, la proposta calibrata su di lei, senza partire da zero. Per te. Per le tue operatrici. Anche quando non ci sei. Anche quando sei a casa in malattia.
+    </p>
+    <div class="hero-ctas reveal">
+      <a href="mybblo_prova.html" class="btn-primary">Prova gratis — richiedi la demo →</a>
+      <a href="#atto1" class="btn-secondary">Scopri come funziona ↓</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- DIAGRAMMA CIRCOLARE -->
+<section style="background: var(--ink2); padding: 80px 32px; border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);">
+  <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+    <div class="sez-eyebrow reveal" style="color: var(--gold); margin-bottom: 40px;">Cosa fa per te, con ogni singola cliente</div>
+    <div class="reveal" style="position: relative; width: 100%; max-width: 520px; margin: 0 auto;">
+      <svg viewBox="0 0 520 560" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; overflow:visible;">
+        <defs>
+          <radialGradient id="centerGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2A2318"/>
+            <stop offset="100%" stop-color="#1A1612"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Cerchio esterno decorativo -->
+        <circle cx="260" cy="260" r="195" fill="none" stroke="rgba(166,124,58,0.2)" stroke-width="1"/>
+        <circle cx="260" cy="260" r="160" fill="none" stroke="rgba(166,124,58,0.1)" stroke-width="0.5" stroke-dasharray="4 8"/>
+
+        <!-- Linee di connessione dal centro ai punti (raggio 195) -->
+        <!-- Punto 1: cima — 270° → x=260, y=260-195=65 -->
+        <line x1="260" y1="260" x2="260" y2="65" stroke="rgba(166,124,58,0.25)" stroke-width="1"/>
+        <!-- Punto 2: destra alto — 342° → x=260+195*cos(-18°), y=260+195*sin(-18°) -->
+        <line x1="260" y1="260" x2="445" y2="200" stroke="rgba(166,124,58,0.25)" stroke-width="1"/>
+        <!-- Punto 3: destra basso — 54° → -->
+        <line x1="260" y1="260" x2="375" y2="418" stroke="rgba(166,124,58,0.25)" stroke-width="1"/>
+        <!-- Punto 4: sinistra basso — 126° → -->
+        <line x1="260" y1="260" x2="145" y2="418" stroke="rgba(166,124,58,0.25)" stroke-width="1"/>
+        <!-- Punto 5: sinistra alto — 198° → -->
+        <line x1="260" y1="260" x2="75" y2="200" stroke="rgba(166,124,58,0.25)" stroke-width="1"/>
+
+        <!-- Cerchio centrale -->
+        <circle cx="260" cy="260" r="88" fill="url(#centerGrad)" stroke="rgba(166,124,58,0.5)" stroke-width="1.5"/>
+        <text x="260" y="248" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="16" font-weight="500" letter-spacing="2" fill="#C9A86C">MY.BBLO</text>
+        <text x="260" y="268" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="13" font-weight="300" letter-spacing="1.5" fill="rgba(201,168,108,0.7)">PROFILER</text>
+        <text x="260" y="290" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="13" font-style="italic" fill="rgba(245,239,230,0.5)">il tuo pre-consulente</text>
+
+        <!-- PUNTO 1 — cima esatta (260, 65) -->
+        <circle cx="260" cy="65" r="7" fill="#A67C3A" filter="url(#glow)"/>
+        <text x="260" y="24" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">Elabora il profilo</text>
+        <text x="260" y="44" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">esatto della cliente</text>
+
+        <!-- PUNTO 2 — destra alto (445, 200) -->
+        <circle cx="445" cy="200" r="7" fill="#A67C3A" filter="url(#glow)"/>
+        <text x="460" y="188" text-anchor="start" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">Ti svela la leva</text>
+        <text x="460" y="208" text-anchor="start" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">emotiva per chiudere</text>
+
+        <!-- PUNTO 3 — destra basso (375, 418) -->
+        <circle cx="375" cy="418" r="7" fill="#A67C3A" filter="url(#glow)"/>
+        <text x="390" y="450" text-anchor="start" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">Struttura commerciale:</text>
+        <text x="390" y="470" text-anchor="start" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">il tuo stratega</text>
+        <text x="390" y="490" text-anchor="start" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">di marketing</text>
+
+        <!-- PUNTO 4 — sinistra basso (145, 418) -->
+        <circle cx="145" cy="418" r="7" fill="#A67C3A" filter="url(#glow)"/>
+        <text x="130" y="450" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">Briefing operativo:</text>
+        <text x="130" y="470" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">il documento che ti</text>
+        <text x="130" y="490" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">conduce al percorso giusto</text>
+
+        <!-- PUNTO 5 — sinistra alto (75, 200) -->
+        <circle cx="75" cy="200" r="7" fill="#A67C3A" filter="url(#glow)"/>
+        <text x="60" y="188" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">Ti guida</text>
+        <text x="60" y="208" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">nell'approccio</text>
+        <text x="60" y="228" text-anchor="end" font-family="'Cormorant Garamond', serif" font-size="16" font-style="italic" fill="#F5EFE6">orientativo</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 1 — Lo specchio -->
+<section class="sez-dark on-dark" id="atto1">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">Il tuo centro, ogni giorno</div>
+    <h2 class="sez-headline reveal">Conosci questa giornata?</h2>
+    <div class="sez-body reveal">
+      <p>Entri la mattina. L'agenda ha tre cerette, due manicure e una rimozione semipermanente. Nel pomeriggio hai in cabina una cliente per un trattamento corpo. Nel frattempo la tua operatrice ti ferma in corridoio: <em>"Come le strutturo il percorso?"</em></p>
+      <p>Tu sospiri. Spieghi. Torni in cabina. Fai la valutazione come hai sempre fatto — a occhio, con l'esperienza, con l'istinto che ti sei costruita in anni di lavoro.</p>
+      <p>Come fanno la maggior parte delle professioniste del settore, del resto. Qualcuna lavora con le lastre termografiche. Pochissime con strumenti avanzati. Ma in nessuno di questi casi c'è qualcuno — o qualcosa — che prende tutto quello che sai sulla cliente e lo trasforma in una proposta commerciale precisa, calibrata su di lei, pronta da usare.</p>
+      <p>Alla fine del giorno, quella cliente ha detto <strong>"ci penso"</strong>.</p>
+      <p>Non è andata male. È andata come va sempre, quando si lavora senza il supporto giusto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 2 — Il problema invisibile -->
+<section class="sez-cream2 on-light">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">Il problema invisibile</div>
+    <h2 class="sez-headline reveal">Non è colpa tua. È che stavi lavorando senza uno strumento che, semplicemente, fino ad oggi non esisteva.</h2>
+    <div class="sez-body reveal">
+      <p style="margin-bottom:12px;">Oggi quel sogno è realtà.</p>
+      <p>Hai frequentato corsi. Lavori da molti anni. Conosci il tuo mestiere meglio di chiunque. Il problema non è la competenza. Il problema è che ogni giornata ti chiede di fare tre cose in simultanea, che nessuna persona da sola riesce a coniugare bene, mettendole tutte e tre insieme:</p>
+    </div>
+    <div class="tre-blocchi reveal" style="--border-gold: rgba(166,124,58,0.25);">
+      <div class="blocco" style="border-top-color: rgba(166,124,58,0.25);">
+        <div class="blocco-label" style="color: var(--gold);">Leggere la cliente</div>
+        <div class="blocco-testo" style="color: #2A2018;">Capire cosa vuole davvero, cosa la frena, cosa la muove emotivamente, quanto è disposta a investire.</div>
+      </div>
+      <div class="blocco" style="border-top-color: rgba(166,124,58,0.25);">
+        <div class="blocco-label" style="color: var(--gold);">Guidare le tue operatrici</div>
+        <div class="blocco-testo" style="color: #2A2018;">Essere sempre lì, per ogni cliente, per ogni proposta. Rispondere sempre alla stessa domanda: "Come la gestisco?" Essere il punto di riferimento di tutto, ogni giorno, senza mai poter staccare davvero.</div>
+      </div>
+      <div class="blocco" style="border-top-color: rgba(166,124,58,0.25); border-bottom-color: rgba(166,124,58,0.25);">
+        <div class="blocco-label" style="color: var(--gold);">Costruire la proposta giusta</div>
+        <div class="blocco-testo" style="color: #2A2018;">Non troppo ambiziosa da spaventarla, non troppo timida da non chiudere. Ma soprattutto onesta: quella che le dice davvero quante sedute le servono, senza illuderla con percorsi troppo corti, e senza che la cifra reale la faccia alzare dalla sedia.</div>
+      </div>
+    </div>
+    <div class="sez-body reveal">
+      <p style="font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--text-on-light); font-weight: 400; line-height: 1.4;">Tre lavori. Una persona. Zero strumenti dedicati.<br>Fino ad oggi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 3 — La svolta -->
+<section class="sez-darker on-dark">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">La svolta</div>
+    <h2 class="sez-headline reveal">MY.BBLO Profiler. Come avere una seconda te — già formata, sempre in turno.</h2>
+    <div class="sez-body reveal">
+      <p>Immagina di avere in centro una figura già formata, che non si ammala mai, non fa mai la proposta sbagliata alla cliente sbagliata, e lavora anche quando sei in cabina, fuori per un corso, o semplicemente quando non ci sei.</p>
+      <p>Non è fantascienza. È quello che succede quando la cliente completa il Profiler.</p>
+      <p>Comodamente seduta in reception mentre aspetta il suo turno, durante una manicure o una pedicure, oppure sul divano dal telefono prima di venire — risponde a domande pensate per capire quello che lei stessa non sa ancora di voler dire: l'inestetismo che la pesa di più, il tessuto, la zona, la motivazione vera, la disponibilità emotiva a investire.</p>
+      <p>Quello che arriva a te non è un semplice questionario. È un briefing completo: il profilo della cliente, l'approccio orientativo per il suo inestetismo, la leva emotiva con cui aprire la conversazione, e la struttura commerciale più adatta al suo profilo.</p>
+      <p><strong>Le tue operatrici entrano in cabina sapendo già come guidare quella cliente. Tu chiudi il check-up senza partire da zero. E se oggi manca qualcuno, il livello del servizio non crolla — perché il briefing è già lì, e il lavoro l'ha già fatto il Profiler.</strong></p>
+    </div>
+  </div>
+  <!-- CTA INTERMEDIO 1 -->
+  <div class="cta-intermedio reveal" style="max-width:720px; margin: 0 auto;">
+    <p class="cta-intermedio-label">Vuoi vedere come appare il briefing di una tua cliente?</p>
+    <a href="mybblo_prova.html" class="btn-primary">Richiedi la demo gratuita →</a>
+  </div>
+</section>
+
+<!-- ATTO 4 — L'Open Day Digitale -->
+<section class="sez-light on-light">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">L'open day digitale</div>
+    <h2 class="sez-headline reveal">Hai mai fatto un open day? Allora sai esattamente di cosa stiamo parlando.</h2>
+    <div class="sez-body reveal">
+      <p>Gli open day gestiti bene, con clienti qualificate, producono un buon fatturato. Ma sono quasi sempre le stesse clienti a parteciparvi.</p>
+      <p>Quando si allarga la platea — alle clienti ancorate alla ceretta, alla pedicure, alla manicure — il quadro cambia.</p>
+    </div>
+    <div class="open-day-grid reveal" style="--gold-border: rgba(166,124,58,0.25);">
+      <div class="od-card" style="background: rgba(138,58,52,0.06); border-color: rgba(138,58,52,0.2);">
+        <div class="od-card-label" style="color: #8A3A34;">Il problema</div>
+        <div class="od-card-testo" style="color: #2A2018;">Le disdette dell'ultimo minuto fioccano. Molte vengono per il trattamento in omaggio e non confermano nulla. Del numero previsto, forse il 20-30% aderisce — su un percorso base, dove il prezzo basso è l'unico elemento che le ha convinte.</div>
+      </div>
+      <div class="od-card" style="background: rgba(138,58,52,0.06); border-color: rgba(138,58,52,0.2);">
+        <div class="od-card-label" style="color: #8A3A34;">Il risultato</div>
+        <div class="od-card-testo" style="color: #2A2018;">Non proseguono. Arrivano convinte che quel primo approccio sia già la soluzione definitiva. Escono spesso deluse. E non tornano a chiederti un nuovo programma corpo.</div>
+      </div>
+    </div>
+    <div class="sez-body reveal">
+      <p>C'è anche un altro problema, che conosci bene: i pacchetti proposti durante un open day sono quasi sempre pre-compilati. Due o tre opzioni, uguali per tutte. Non perché tu non voglia fare di meglio — ma perché costruire una proposta personalizzata per ogni cliente, in un giorno solo, è umanamente impossibile.</p>
+    </div>
+    <div class="valore-highlight reveal" style="background: rgba(166,124,58,0.07); border-color: rgba(166,124,58,0.25);">
+      <p style="color: var(--text-on-light); font-family: var(--serif); font-size: 20px; font-style: italic; font-weight: 400; line-height: 1.7;">Con MY.BBLO Profiler, ogni giorno può diventare un open day. Senza la preparazione estenuante. Senza i buchi in agenda dell'ultimo minuto. Senza pacchetti uguali per tutte.</p>
+    </div>
+    <div class="sez-body reveal">
+      <p>La cliente compila il Profiler — in reception, durante un servizio, o da casa prima di venire. Tu ricevi il briefing. Entri in cabina con una proposta già costruita su di lei. Ogni appuntamento diventa un'opportunità pianificata. Ogni fascia oraria — anche quelle che di solito rimangono vuote — diventa un potenziale percorso corpo aperto.</p>
+      <p><strong>Non aspetti più che arrivi il momento giusto per fare l'open day. Le opportunità si auto-generano, ogni giorno, con le clienti che hai già.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 5 — La leva emotiva -->
+<section class="sez-dark on-dark">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">La leva emotiva</div>
+    <h2 class="sez-headline reveal">Sai perché alcune clienti decidono subito e altre ci pensano per mesi?</h2>
+    <div class="sez-body reveal">
+      <p>Non è il budget. Non è il momento. Non è "che tipo di persona sono".</p>
+      <p>È la leva emotiva — quell'elemento preciso che, per quella cliente, in quel momento, rende il percorso corpo qualcosa che sente urgente, necessario, suo.</p>
+    </div>
+    <div class="leva-grid reveal">
+      <div class="leva-item">
+        <div class="leva-dot"></div>
+        <div class="leva-testo">Vuole stare bene per sé, migliorare la propria autostima.</div>
+      </div>
+      <div class="leva-item">
+        <div class="leva-dot"></div>
+        <div class="leva-testo">C'è un evento importante in arrivo.</div>
+      </div>
+      <div class="leva-item">
+        <div class="leva-dot"></div>
+        <div class="leva-testo">È stanca di convivere con qualcosa che la pesa da anni.</div>
+      </div>
+      <div class="leva-item">
+        <div class="leva-dot"></div>
+        <div class="leva-testo">Vuole vedere i primi risultati prima di impegnarsi sul percorso completo.</div>
+      </div>
+      <div class="leva-item">
+        <div class="leva-dot"></div>
+        <div class="leva-testo">Vuole tutto e subito — o non parte.</div>
+      </div>
+    </div>
+    <div class="sez-body reveal">
+      <p>Senza il Profiler, queste informazioni le devi estrarre tu — a intuito, in pochi minuti, mentre stai già pensando alla cliente dopo.</p>
+      <p><strong>Con il Profiler, la leva emotiva arriva nel briefing. Pronta. Prima che lei entri in cabina.</strong></p>
+      <p>Non stai più lavorando a occhio. Stai aprendo ogni consulenza con la chiave giusta, per quella porta specifica. E la differenza — tra una cliente che dice sì e una che dice "ci penso" — spesso sta esattamente qui.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 6 — "Ci penso." -->
+<div class="ci-penso-wrap">
+  <div class="ci-penso-label reveal">Quella frase che hai sentito mille volte</div>
+  <div class="ci-penso-frase reveal">"Ci penso."</div>
+  <p class="ci-penso-sub reveal">Due parole che non significano no — significano <em>"non mi hai dato abbastanza per dire sì adesso"</em>.</p>
+</div>
+<section class="sez-darker on-dark" style="padding-top: 72px;">
+  <div class="sez-inner">
+    <div class="sez-body reveal">
+      <p>Il momento in cui la cliente dice "ci penso" non è un problema suo. È un problema di proposta: presentata con la struttura sbagliata, al momento sbagliato, senza sapere cosa la stava frenando davvero. Troppo ambiziosa per chi voleva partire piano. Troppo timida per chi era già pronta a investire. Uguale per tutte, quando invece ogni cliente è diversa.</p>
+      <p>MY.BBLO Profiler ti consegna, per ogni profilo, la strategia commerciale più adatta: quando proporre il percorso completo, quando strutturarlo per blocchi progressivi, come presentare l'investimento in modo che sia — e sembri — la scelta naturale per quella persona.</p>
+      <p><strong>È quello che si impara dopo anni di corsi di marketing. Solo che qui non lo studi — lo usi. Cliente per cliente. Dal primo giorno.</strong></p>
+    </div>
+  </div>
+  <!-- CTA INTERMEDIO 2 -->
+  <div class="cta-intermedio reveal" style="max-width:720px; margin: 0 auto;">
+    <p class="cta-intermedio-label">Inizia oggi — la demo è gratuita</p>
+    <a href="mybblo_prova.html" class="btn-primary">Richiedi la demo →</a>
+  </div>
+</section>
+
+<!-- ATTO 7 — Quanto vale davvero -->
+<section class="sez-cream2 on-light">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">Quanto vale davvero</div>
+    <h2 class="sez-headline reveal">Fai un calcolo veloce con noi.</h2>
+    <div class="sez-body reveal">
+      <p>Un corso di marketing per estetiste — quelli seri, quelli che promettono di insegnarti a vendere i percorsi corpo — costa tra i 200 e i 500 euro. Alcuni percorsi parlano di migliaia di euro. Più IVA. Quanti ne hai fatti? Quanti ne hai fatti fare alla tua operatrice?</p>
+      <p>E quanto di quello che hai imparato riesci davvero a trasferire in operatività concreta, cliente per cliente, ogni mattina quando apri il centro?</p>
+      <p>La conoscenza serve. Ma da sola non basta. Serve uno strumento che quella conoscenza la metta a terra — automaticamente, ogni volta, per ogni cliente. Senza dover dipendere da quanto è preparata l'operatrice che hai in turno quel giorno.</p>
+      <p>Ora pensa alle clienti che hai già. Quelle che vengono solo per ceretta e manicure — scontrino basso, energie alte. Quelle che hanno fatto un trattamento singolo e non hai mai trovato il modo giusto per accompagnarle verso un percorso strutturato. Quelle che tornano solo d'estate, come se il loro corpo avesse bisogno di attenzioni solo tre mesi l'anno.</p>
+    </div>
+    <div class="valore-highlight reveal">
+      <p style="color:#1A1612; font-family:var(--serif); font-size:20px; font-style:italic; font-weight:500; line-height:1.7;">Con gli stessi clienti che hai già, MY.BBLO Profiler può trasformare appuntamenti singoli in percorsi strutturati. Senza nuovi investimenti in pubblicità. Senza assumere personale. È anche lo strumento che valorizza i macchinari e le tecnologie che hai già in cabina — e che spesso restano fermi perché manca il sistema per portarci dentro le clienti giuste al momento giusto.</p>
+    </div>
+    <div class="risparmio-lista reveal">
+      <div class="risparmio-item" style="color:#2A2018;">Risparmio in formazione — meno corsi ripetuti, meno aggiornamenti da inseguire</div>
+      <div class="risparmio-item" style="color:#2A2018;">Meno ore perse a spiegare le stesse cose alle operatrici ogni giorno</div>
+      <div class="risparmio-item" style="color:#2A2018;">Meno consulenze regalate senza un percorso che le segue</div>
+      <div class="risparmio-item" style="color:#2A2018;">Meno imbarazzo nel presentare il prezzo — con il briefing in mano sai già con chi hai a che fare</div>
+      <div class="risparmio-item" style="color:#2A2018;">Più percorsi corpo che si chiudono davvero</div>
+    </div>
+    <div class="prezzo-frame reveal">
+      <p>Il tutto, per meno del costo di un trattamento corpo al mese.</p>
+    </div>
+  </div>
+</section>
+<div style="background: var(--ink); padding: 56px 32px; text-align: center; border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);">
+  <p style="font-family: var(--serif); font-size: clamp(22px, 3.5vw, 34px); font-style: italic; font-weight: 300; color: var(--gold-light); line-height: 1.4; max-width: 600px; margin: 0 auto;">Il tutto, per meno del costo<br>di un trattamento corpo al mese.</p>
+</div>
+
+<!-- ATTO 8 — De-stagionalizzare -->
+<section class="sez-dark on-dark">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">Corpo tutto l'anno</div>
+    <h2 class="sez-headline reveal">Il corpo non è stagionale. Lo è diventato perché mancava lo strumento.</h2>
+    <div class="sez-body reveal">
+      <p>Settembre arriva e le clienti tornano tutte insieme. Gennaio è pieno di buoni propositi. Luglio è un deserto.</p>
+      <p>Il mercato del benessere e della cura del corpo vale miliardi — ed è in costante crescita. Il problema non è che le donne non investano su sé stesse. È che spesso investono altrove: in creme, in prodotti, in soluzioni rapide che trovano fuori dal centro estetico. Non perché il centro non abbia le risposte giuste — ma perché nessuno le ha mai raggiunte nel momento in cui erano pronte ad ascoltare.</p>
+      <p>Con il Profiler, ogni mese dell'anno diventa il momento giusto per iniziare un percorso. Perché il profilo della cliente è pronto, la leva emotiva è già attivata, e la proposta è calibrata su dove lei è oggi — non su dove sarebbe comoda a giugno.</p>
+      <p><strong>La de-stagionalizzazione non si ottiene con le promozioni di gennaio. Si ottiene con un sistema che mantiene vivo il dialogo con la cliente tutto l'anno. E che trasforma ogni occasione di contatto — un messaggio, una ceretta, una visita di routine — in un punto di partenza.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 9 — L'effetto ambasciatrice -->
+<section class="sez-light on-light">
+  <div class="sez-inner">
+    <div class="sez-eyebrow reveal">L'effetto ambasciatrice</div>
+    <h2 class="sez-headline reveal">La cliente che torna a casa con qualcosa di inaspettato.</h2>
+    <div class="sez-body reveal">
+      <p>C'è qualcosa che non ti aspetti, la prima volta che una cliente completa il Profiler e riceve il suo report.</p>
+      <p>Non è solo soddisfatta. È sorpresa. Colpita dalla precisione. Dal fatto che qualcuno — finalmente — abbia messo nero su bianco esattamente quello che sente da anni, con parole che sembrano scritte per lei sola.</p>
+      <p>Ed è proprio in quel momento — mentre tiene in mano qualcosa di così personale e preciso — che tu puoi fare una cosa semplice e potente.</p>
+    </div>
+    <div class="frase-titolare reveal">
+      <p>"Se ti fa piacere, posso fartelo avere in regalo per una tua amica. Basta che mi invii il suo nome e numero di telefono — le mando questa opportunità specificandole che è un tuo regalo personale."</p>
+    </div>
+    <div class="sez-body reveal">
+      <p>Un gesto elegante. Non una promozione. Non uno sconto. Un regalo nominale, da parte sua, per qualcuno a cui tiene.</p>
+      <p>L'amica riceve qualcosa di inaspettato e prezioso — un profilo corpo personalizzato, in dono. Arriva al tuo centro già curiosa, già con un'aspettativa positiva, già con la percezione che quel posto faccia qualcosa di speciale.</p>
+      <p><strong>Non stai solo profilando le clienti che hai. Stai costruendo, una cliente alla volta, una rete di persone che arrivano da te già convinte — perché glielo ha detto qualcuno di cui si fidano.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ATTO 10 — CTA Finale -->
+<section class="finale">
+  <div class="finale-inner">
+    <div class="gold-divider"></div>
+    <div class="finale-eyebrow reveal">Inizia oggi</div>
+    <h2 class="finale-headline reveal">PROVALO.<br><span>Qualche minuto,<br>e capisci se fa per te.</span></h2>
+    <p class="finale-sub reveal">Nessun contratto. Nessun impegno. Nessuna decisione da prendere oggi. Solo la possibilità di vedere, con i tuoi occhi, cosa ricevi dopo che una cliente completa il Profiler — il briefing, la leva emotiva, l'approccio orientativo, la struttura commerciale su misura.</p>
+    <div class="finale-garanzia reveal">
+      <div class="garanzia-item">Nessun contratto</div>
+      <div class="garanzia-item">Accesso immediato</div>
+      <div class="garanzia-item">Demo gratuita</div>
+    </div>
+    <a href="mybblo_prova.html" class="btn-primary reveal" style="font-size:15px; padding: 18px 48px;">Richiedi la tua demo gratuita →</a>
+    <p class="finale-accesso reveal" style="color: var(--gold-light); font-style: italic;">Accesso su richiesta — ogni centro viene attivato personalmente,<br>per garantire i migliori standard qualitativi.</p>
+    <p class="finale-accesso reveal" style="margin-top: 20px; color: var(--text-on-dark);">Se non ti convince, non ti sarà costato niente averlo provato.<br>Se ti convince — <em style="color: var(--gold-light);">e succede quasi sempre</em> — avrai capito perché chi inizia a lavorare con MY.BBLO non torna più indietro.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Metodo MY.BBLO Profiler</div>
+  <p class="footer-copy">© 2026 BBLO Srl · Lacchiarella, Milano · Tutti i diritti riservati</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger per gruppi
+document.querySelectorAll('.leva-grid .leva-item, .risparmio-lista .risparmio-item, .open-day-grid .od-card').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.08}s`;
+  el.classList.add('reveal');
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
